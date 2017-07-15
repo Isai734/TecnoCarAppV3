@@ -1,4 +1,4 @@
-package com.example.navi.tecnocarappv3.ui.adapters;
+package com.example.navi.tecnocarappv3.view.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.example.navi.tecnocarappv3.R;
 import com.example.navi.tecnocarappv3.control.Autos;
-import com.example.navi.tecnocarappv3.ui.fragment.AutosFragment;
+import com.example.navi.tecnocarappv3.view.fragment.AutosFragment;
 
 import java.util.ArrayList;
 

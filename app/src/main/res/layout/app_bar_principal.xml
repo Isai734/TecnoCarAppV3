@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.navi.tecnocarappv3.ui.Principal">
+    tools:context="com.example.navi.tecnocarappv3.view.Principal">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.navi.tecnocarappv3.ui;
+package com.example.navi.tecnocarappv3.view;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,14 +14,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.navi.tecnocarappv3.LoginActivity;
+import com.example.navi.tecnocarappv3.view.activities.LoginActivity;
 import com.example.navi.tecnocarappv3.R;
 import com.example.navi.tecnocarappv3.control.Autos;
 import com.example.navi.tecnocarappv3.prefs.SessionPreferences;
-import com.example.navi.tecnocarappv3.ui.fragment.AcercaDe;
-import com.example.navi.tecnocarappv3.ui.fragment.AutosFragment;
-import com.example.navi.tecnocarappv3.ui.fragment.Citas;
-import com.example.navi.tecnocarappv3.ui.fragment.Perfil;
+import com.example.navi.tecnocarappv3.view.fragment.AcercaDe;
+import com.example.navi.tecnocarappv3.view.fragment.AutosFragment;
+import com.example.navi.tecnocarappv3.view.fragment.Citas;
+import com.example.navi.tecnocarappv3.view.fragment.Perfil;
 
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Perfil.OnFragmentInteractionListener,AutosFragment.OnLisAutoListener {

@@ -1,4 +1,4 @@
-package com.example.navi.tecnocarappv3.datos;
+package com.example.navi.tecnocarappv3.model;
 
 import com.example.navi.tecnocarappv3.control.Autos;
 

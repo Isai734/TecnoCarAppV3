@@ -1,4 +1,4 @@
-package com.example.navi.tecnocarappv3;
+package com.example.navi.tecnocarappv3.view.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -29,10 +29,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.navi.tecnocarappv3.R;
 import com.example.navi.tecnocarappv3.control.Login;
-import com.example.navi.tecnocarappv3.datos.RetrofitService;
-import com.example.navi.tecnocarappv3.datos.ResponseApi;
-import com.example.navi.tecnocarappv3.ui.Principal;
+import com.example.navi.tecnocarappv3.model.RetrofitService;
+import com.example.navi.tecnocarappv3.model.ResponseApi;
+import com.example.navi.tecnocarappv3.view.Principal;
 import com.example.navi.tecnocarappv3.prefs.SessionPreferences;
 
 import java.io.IOException;
@@ -377,7 +378,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void showSignup() {
-        startActivity(new Intent(this, SignUp.class));
+        startActivity(new Intent(this, SignUpActivity.class));
         finish();
     }
 

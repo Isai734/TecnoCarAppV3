@@ -1,4 +1,4 @@
-package com.example.navi.tecnocarappv3.datos;
+package com.example.navi.tecnocarappv3.model;
 import com.google.gson.Gson;
 
 import java.io.IOException;

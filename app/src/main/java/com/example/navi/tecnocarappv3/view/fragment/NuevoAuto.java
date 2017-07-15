@@ -1,6 +1,5 @@
-package com.example.navi.tecnocarappv3.ui.fragment;
+package com.example.navi.tecnocarappv3.view.fragment;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,14 +12,14 @@ import com.example.navi.tecnocarappv3.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link EditarPerfil.OnFragmentInteractionListener} interface
+ * {@link NuevoAuto.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class EditarPerfil extends Fragment {
+public class NuevoAuto extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public EditarPerfil() {
+    public NuevoAuto() {
         // Required empty public constructor
     }
 
@@ -29,7 +28,7 @@ public class EditarPerfil extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_editar_perfil, container, false);
+        return inflater.inflate(R.layout.fragment_nuevo_auto, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -38,6 +37,7 @@ public class EditarPerfil extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
 
 
     @Override
