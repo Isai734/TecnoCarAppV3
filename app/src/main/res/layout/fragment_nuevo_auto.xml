@@ -1,0 +1,140 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.navi.tecnocarappv3.ui.fragment.NuevoAuto">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+                android:text="@string/title_NuevoAuto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView19"
+                android:layout_margin="16dp"
+                android:textSize="24sp"
+                android:textColor="@color/colorPrimaryDark" />
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_label_matricula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/txtMatricula"
+                    android:layout_weight="1"
+                    android:hint="@string/prompt_Matricula"
+                    android:focusable="true"
+                    android:layout_margin="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_label_marca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/txtMarca"
+                    android:layout_weight="1"
+                    android:hint="@string/prompt_Marca"
+                    android:focusable="true"
+                    android:layout_margin="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_label_modelo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/txtModelo"
+                    android:layout_weight="1"
+                    android:hint="@string/prompt_Modelo"
+                    android:focusable="true"
+                    android:layout_margin="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_label_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/txtColor"
+                    android:layout_weight="1"
+                    android:hint="@string/prompt_Color"
+                    android:focusable="true"
+                    android:layout_margin="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_label_anio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/txtAnio"
+                    android:layout_weight="1"
+                    android:hint="@string/prompt_Anio"
+                    android:focusable="true"
+                    android:layout_margin="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_label_transmision"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/txtTransmision"
+                    android:layout_weight="1"
+                    android:hint="@string/prompt_Transmision"
+                    android:focusable="true"
+                    android:layout_margin="16dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                    android:id="@+id/button_nuevoAuto"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/action_Nuevo_Auto"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:textColor="@color/cardview_light_background"
+                    android:layout_gravity="center_vertical|center_horizontal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

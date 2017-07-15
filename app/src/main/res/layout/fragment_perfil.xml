@@ -1,0 +1,188 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-autos"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.navi.tecnocarappv3.ui.fragment.Perfil"
+    xmlns:card_view="http://schemas.android.com/apk/res-autos">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <!-- pues solo es esto
+    si con eso lo seteas desde la clase que lo crea donde lo creas?
+    -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Informacion del usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance"
+            android:id="@+id/textView4"
+            android:paddingTop="15dp"
+            android:layout_marginLeft="6dp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardElevation="4dp"
+            card_view:cardCornerRadius="3dp"
+            android:layout_margin="6dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="6dp"
+                android:gravity="center">
+
+                <TextView
+                    android:text="Nombre:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/textView5"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp" />
+
+                <TextView
+                    android:text="Geova"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/txv_nombre_persona"
+                    android:layout_marginLeft="6dp" />
+
+                <TextView
+                    android:text="Apellido Paterno:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/textView7"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp"/>
+
+                <TextView
+                    android:text="Martinez"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/paterno_persona"
+                    android:layout_marginLeft="6dp"/>
+
+                <TextView
+                    android:text="Apellido Materno:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/textView9"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp"/>
+
+                <TextView
+                    android:text="Pólito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/materno_persona"
+                    android:layout_marginLeft="6dp"/>
+
+                <TextView
+                    android:text="Teléfono:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/textView11"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp"/>
+
+                <TextView
+                    android:text="7471260228"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/telefono_persona"
+                    android:layout_marginLeft="6dp"/>
+
+                <TextView
+                    android:text="Dirección:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/textView13"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp"/>
+
+                <TextView
+                    android:text="Aldama #70 Col. Lomas de San Antonio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/direccion_persona"
+                    android:layout_marginLeft="6dp"/>
+
+                <TextView
+                    android:text="E-Mail:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/textView15"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp"/>
+
+                <TextView
+                    android:text="lezikk_kaoz@hotmail.com"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/email_persona"
+                    android:layout_marginLeft="6dp"/>
+
+                <TextView
+                    android:text="RFC:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/textView17"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="6dp"/>
+
+                <TextView
+                    android:text="MAPG930803G7Y"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:id="@+id/rfc_persona"
+                    android:layout_marginLeft="6dp"/>
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabeditarperfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:fabSize="normal"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_settings_black_48dp"
+        app:backgroundTint="@color/colorPrimaryDark">
+
+    </android.support.design.widget.FloatingActionButton>
+
+</FrameLayout>

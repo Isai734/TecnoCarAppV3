@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_person_black_48dp"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_citas"
+            android:icon="@drawable/ic_event_black_48dp"
+            android:title="Citas" />
+        <item
+            android:id="@+id/nav_autos"
+            android:icon="@drawable/ic_directions_car_black_48dp"
+            android:title="Mis autos" />
+        <item
+            android:id="@+id/nav_servicios"
+            android:icon="@drawable/ic_assistant_photo_black_48dp"
+            android:title="Mis servicios" />
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_acerca"
+                android:icon="@drawable/ic_info_outline_black_48dp"
+                android:title="Acerca de..." />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_power_settings_new_black_48dp"
+                android:title="Cerrar sesión" />
+        </menu>
+    </item>
+
+</menu>

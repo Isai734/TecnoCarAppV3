@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">TecnoCarAppV3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">Inicio de sesión</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_user_id">Usuario</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="error_invalid_user_id">Usuario no valido</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_field_required">Este campo es requerido</string>
+    <string name="error_server">Error en el servidor</string>
+    <string name="error_incorrect_user_id">Usuario no registrado</string>
+    <string name="error_network">Conexión de red no disponible</string>
+    <string name="error_invalid_password">Contraseña no valida</string>
+
+    <!--Strings for signup-->
+    <string name="prompt_user_name">Nombre</string>
+    <string name="prompt_user_ap">Apellido Paterno</string>
+    <string name="prompt_user_am">Apellido Materno</string>
+    <string name="prompt_user_telefono">Teléfono</string>
+    <string name="prompt_user_direccion">Dirección</string>
+    <string name="prompt_user_email">E-Mail</string>
+    <string name="prompt_user_rfc">RFC</string>
+    <string name="action_sign_up">Registrarse</string>
+    <string name="datos_personales">Datos Personales</string>
+
+    <!--String for nuevacita-->
+    <string name="title_nuevacita">Registrar nueva cita</string>
+    <string name="prompt_fecha">Fecha</string>
+    <string name="prompt_hora">Hora</string>
+    <string name="prompt_detalle_cita">Detalle de la cita</string>
+    <string name="action_registrar_nueva_cita">Registrar</string>
+
+    <!--Strings for EditarPerfil-->
+    <string name="title_EditarPerfil">Editar datos</string>
+    <string name="promptEdit_user_name">Nombre</string>
+    <string name="promptEdit_user_ap">Apellido Paterno</string>
+    <string name="promptEdit_user_am">Apellido Materno</string>
+    <string name="promptEdit_user_telefono">Teléfono</string>
+    <string name="promptEdit_user_direccion">Dirección</string>
+    <string name="promptEdit_user_email">E-Mail</string>
+    <string name="promptEdit_user_rfc">RFC</string>
+    <string name="action_Editar">Confirmar</string>
+    <string name="datosEdit_personales">Datos Personales</string>
+
+    <!--Strings for NuevoAuto-->
+    <string name="title_NuevoAuto">Registrar nuevo autos</string>
+    <string name="prompt_Matricula">Matricula</string>
+    <string name="prompt_Marca">Marca</string>
+    <string name="prompt_Modelo">Modelo</string>
+    <string name="prompt_Color">Color</string>
+    <string name="prompt_Anio">Año</string>
+    <string name="prompt_Transmision">Transmisión</string>
+    <string name="action_Nuevo_Auto">Registrar</string>
+
+    <!--Strings for AcercaDe-->
+    <string name="label_nombreApp">TecnoCar Movil</string>
+    <string name="label_versionApp">Version 1.0</string>
+    <string name="label_anio">2017</string>
+    <string name="label_nombreTaller">Servicio mecanico automotriz y diesel "TecnoCar".</string>
+</resources>

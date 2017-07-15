@@ -1,0 +1,63 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-autos"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.navi.tecnocarappv3.ui.fragment.AcercaDe">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/logo"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:text="@string/label_nombreApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView21"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="43dp"
+            android:textSize="24sp" />
+
+        <TextView
+            android:text="@string/label_anio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:id="@+id/textView22"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="@string/label_nombreTaller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/textView23"
+            android:layout_below="@+id/textView22"
+            android:layout_centerHorizontal="true"
+            android:textSize="14sp" />
+
+        <TextView
+            android:text="@string/label_versionApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView20"
+            android:layout_below="@+id/textView21"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</FrameLayout>
