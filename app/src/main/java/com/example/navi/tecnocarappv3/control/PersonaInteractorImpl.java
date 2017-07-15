@@ -13,6 +13,9 @@ import com.example.navi.tecnocarappv3.view.activities.LoginActivity;
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okio.Buffer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +49,7 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
             public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
                 // Mostrar progreso
                 listener.showProgress(false);
+                ResponseApi responseApi;
                 // Procesar errores
                 if (!response.isSuccessful()) {
                     String error = "Ha ocurrido un error. Contacte al administrador";
@@ -53,9 +57,11 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
                             .contentType()
                             .subtype()
                             .equals("json")) {
-                        ResponseApi responseApi = ResponseApi.fromResponseBody(response.errorBody());
+
+                        responseApi = ResponseApi.fromResponseBody(response.errorBody());
                         error = responseApi.getMensaje();
-                        Log.d(TAG, responseApi.getMensaje());
+                       // error =error+"\nCodigo: "+ response.code();
+                        Log.d(TAG, error);
                     } else {
                         try {
                             // Reportar causas de error no relacionado con la API
@@ -67,9 +73,9 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
                     listener.setOperationError(error);
                     return;
                 }else {
-                    ResponseApi responseApi = response.body();
+                    responseApi = response.body();
                     String mensaje = responseApi.getMensaje();
-                    listener.setOperationSucess(mensaje);
+                    listener.setOperationSucess(responseApi);
                 }
 
             }
@@ -79,6 +85,23 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
                 listener.setOperationError(t.getMessage());
             }
         });
+    }
+
+    private String bodyToString(final ResponseBody request) {
+        try {
+            final ResponseBody copy=request;
+            final Buffer buffer = new Buffer();
+            byte b[] = new byte[0];
+            if (copy != null){
+                buffer.readFrom(copy.byteStream());
+            }
+
+            else
+                return "";
+            return buffer.readUtf8();
+        } catch (final IOException e) {
+            return "did not work";
+        }
     }
 
     @Override

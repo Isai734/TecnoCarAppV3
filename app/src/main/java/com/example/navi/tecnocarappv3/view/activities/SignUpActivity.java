@@ -9,13 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.navi.tecnocarappv3.R;
+import com.example.navi.tecnocarappv3.control.Login;
 import com.example.navi.tecnocarappv3.control.Persona;
 import com.example.navi.tecnocarappv3.control.PersonaInteractorImpl;
 import com.example.navi.tecnocarappv3.control.Personas;
 import com.example.navi.tecnocarappv3.model.ResponseApi;
+import com.example.navi.tecnocarappv3.prefs.SessionPreferences;
 import com.example.navi.tecnocarappv3.view.PresenterViewListener;
+import com.example.navi.tecnocarappv3.view.Principal;
 
 public class SignUpActivity extends AppCompatActivity implements PresenterViewListener {
 
@@ -57,11 +61,10 @@ public class SignUpActivity extends AppCompatActivity implements PresenterViewLi
         sigUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validateFields())
+                if (!validateFields())
                     return;
                 personaInteractor.insert(new Persona(
-                        null,
-                        pass.getText().toString(),
+                        0,
                         userName.getText().toString(),
                         userAP.getText().toString(),
                         userAM.getText().toString(),
@@ -69,72 +72,79 @@ public class SignUpActivity extends AppCompatActivity implements PresenterViewLi
                         userAddress.getText().toString(),
                         userEmial.getText().toString(),
                         null,
-                        userRfc.getText().toString(),
+                        userRfc.getText().toString()
+                        , "null",
                         "CLIENTE",
-                        null,
-
+                        "null",
+                        userId.getText().toString(),
+                        pass.getText().toString()
+                        , "null"
                 ));
             }
         });
 
     }
 
+
     @Override
     public void showProgress(boolean show) {
-        if(show)
+        if (show)
             progressBar.show();
         else
             progressBar.dismiss();
     }
 
-    public boolean validateFields(){
-        if(!pass.getText().toString().equals(pass2.getText().toString())){
+    public boolean validateFields() {
+        if (!pass.getText().toString().equals(pass2.getText().toString())) {
             pass2.setError("Contraseñas no coinciden");
             return false;
         }
-        if(pass.getText().toString().isEmpty()){
+        if (pass.getText().toString().isEmpty()) {
             pass.setError("Campo vacio");
             return false;
         }
-        if(userName.getText().toString().isEmpty()){
+        if (userName.getText().toString().isEmpty()) {
             userName.setError("Campo vacio");
             return false;
         }
-        if(userAP.getText().toString().isEmpty()){
+        if (userAP.getText().toString().isEmpty()) {
             userAP.setError("Campo vacio");
             return false;
         }
-        if(userAM.getText().toString().isEmpty()){
+        if (userAM.getText().toString().isEmpty()) {
             userAM.setError("Campo vacio");
             return false;
         }
-        if(userPhone.getText().toString().isEmpty()){
+        if (userPhone.getText().toString().isEmpty()) {
             userPhone.setError("Campo vacio");
             return false;
         }
-        if(userAddress.getText().toString().isEmpty()){
+        if (userAddress.getText().toString().isEmpty()) {
             userAddress.setError("Campo vacio");
             return false;
         }
-        if(userEmial.getText().toString().isEmpty()){
+        if (userEmial.getText().toString().isEmpty()) {
             userEmial.setError("Campo vacio");
             return false;
         }
-        if(userRfc.getText().toString().isEmpty()){
+        if (userRfc.getText().toString().isEmpty()) {
             userRfc.setError("Campo vacio");
             return false;
         }
-       return true;
+        return true;
     }
 
     @Override
     public void setOperationError(String response) {
-        Snackbar.make(findViewById(R.id.email_sign_up_button),response,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(findViewById(R.id.email_sign_in_button), response, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
-    public void setOperationSucess(String response) {
-        Snackbar.make(findViewById(R.id.email_sign_up_button),response,Snackbar.LENGTH_LONG).show();
+    public void setOperationSucess(ResponseApi response) {
+        Toast.makeText(this, response.getMensaje(), Toast.LENGTH_LONG).show();
+        SessionPreferences.get(this).saveLogin(new Login(response.getEstado(), userId.getText().toString(), pass.getText().toString()));
+        startActivity(new Intent(this, Principal.class));
+        finish();
     }
 
     public void initProgressBar() {

@@ -7,5 +7,5 @@ public interface PresenterViewListener {
 
     void setOperationError(String response);
 
-    void setOperationSucess(String response);
+    void setOperationSucess(ResponseApi response);
 }
