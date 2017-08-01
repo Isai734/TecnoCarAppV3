@@ -14,21 +14,22 @@ import android.widget.Toast;
 
 import com.example.navi.tecnocarappv3.control.Auto;
 import com.example.navi.tecnocarappv3.control.AutosInteractorImpl;
+import com.example.navi.tecnocarappv3.model.DataStore;
 import com.example.navi.tecnocarappv3.model.ResponseApi;
 import com.example.navi.tecnocarappv3.prefs.SessionPreferences;
-import com.example.navi.tecnocarappv3.view.MyDialogProgress;
 import com.example.navi.tecnocarappv3.view.PresenterViewListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NuevoAuto.OnFragmentInteractionListener} interface
+ * {@link AutoEditFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class NuevoAuto extends Fragment implements PresenterViewListener {
+public class AutoEditFragment extends Fragment implements PresenterViewListener {
 
     private OnFragmentInteractionListener mListener;
     private AutosInteractorImpl interactor;
+    private int pos = -1;
 
     private EditText txtMatricula;
     private EditText txtMarca;
@@ -38,7 +39,7 @@ public class NuevoAuto extends Fragment implements PresenterViewListener {
     private EditText txtTransmision;
     private Button btnNuevoAuto;
 
-    public NuevoAuto() {
+    public AutoEditFragment() {
         // Required empty public constructor
     }
 
@@ -49,6 +50,9 @@ public class NuevoAuto extends Fragment implements PresenterViewListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(com.example.navi.tecnocarappv3.R.layout.fragment_nuevo_auto, container, false);
         interactor = new AutosInteractorImpl(this);
+        if (getArguments() != null) {
+            pos = getArguments().getInt("pos");
+        }
 
         txtMatricula = (EditText) v.findViewById(com.example.navi.tecnocarappv3.R.id.txtMatricula);
         txtMarca = (EditText) v.findViewById(com.example.navi.tecnocarappv3.R.id.txtMarca);
@@ -63,7 +67,7 @@ public class NuevoAuto extends Fragment implements PresenterViewListener {
             public void onClick(View v) {
                 if (!validateFields())
                     return;
-                interactor.post(new Auto(
+                interactor.put(new Auto(
                         SessionPreferences.get(getContext()).getClaveCliente(),
                         txtMatricula.getText().toString(),
                         txtMarca.getText().toString(),
@@ -74,6 +78,7 @@ public class NuevoAuto extends Fragment implements PresenterViewListener {
                 ));
             }
         });
+        setData();
         return v;
     }
 
@@ -114,6 +119,19 @@ public class NuevoAuto extends Fragment implements PresenterViewListener {
         return true;
     }
 
+    public void setData() {
+        if (pos == -1) {
+            getActivity().finish();
+        }
+        Auto auto = DataStore.getInstance().getAutoList().get(pos);
+        txtMatricula.setText(auto.getPlaca());
+        txtMarca.setText(auto.getMarca());
+        txtModelo.setText(auto.getModelo());
+        txtColor.setText(auto.getColor());
+        txtAnio.setText(auto.getAnio()+"");
+        txtTransmision.setText(auto.getTransmision());
+        btnNuevoAuto.setText("Modificar");
+    }
 
     @Override
     public void onDetach() {
@@ -123,10 +141,7 @@ public class NuevoAuto extends Fragment implements PresenterViewListener {
 
     @Override
     public void showProgress(boolean show) {
-        if (show)
-            MyDialogProgress.getInstance(getContext()).show("Agregando auto");
-        else
-            MyDialogProgress.getInstance(getContext()).dismiss();
+
     }
 
     @Override

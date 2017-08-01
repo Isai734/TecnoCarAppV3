@@ -7,9 +7,9 @@ import java.util.List;
  */
 
 public interface OperInteractor<E> {
-    void insert(E data);
-    void update(List<E> data);
-    void delete(long id);
-    E query(long id);
-    List<E> selectAll();
+    void post(E data);
+    void put(E data);
+    void delete(String id);
+    void get(int id);
+    List<E> getAll();
 }

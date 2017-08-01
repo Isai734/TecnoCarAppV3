@@ -1,11 +1,12 @@
 package com.example.navi.tecnocarappv3.view.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.navi.tecnocarappv3.R;
+import com.example.navi.tecnocarappv3.control.Auto;
+import com.example.navi.tecnocarappv3.model.DataStore;
 import com.example.navi.tecnocarappv3.model.ResponseApi;
 import com.example.navi.tecnocarappv3.model.RetrofitService;
 import com.example.navi.tecnocarappv3.prefs.SessionPreferences;
+import com.example.navi.tecnocarappv3.view.activities.AutoAddActivity;
 import com.example.navi.tecnocarappv3.view.adapters.AutoAdapter;
 import com.example.navi.tecnocarappv3.control.Autos;
 
@@ -38,8 +42,8 @@ public class AutosFragment extends Fragment {
 
     //y esto solo lo copio y pego en otra clase y solo cambio los datos por los de la persona?
     //s soolo que tambien debes verificar que ya hallas creado tu xml para que coincida
-    private OnLisAutoListener mListener;
-    private Retrofit mRestAdapter;
+    public OnLisAutoListener mListener;
+    public Retrofit mRestAdapter;
     private RetrofitService retrofitService;
     private RecyclerView recyclerView;
     private AutoAdapter adapter;
@@ -59,13 +63,7 @@ public class AutosFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FragmentManager fragmentManager = getFragmentManager();
-                android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
-                NuevoAuto fragment = new NuevoAuto();
-                transaction.replace(R.id.content_principal, fragment);
-                transaction.commit();
-
+                startActivityForResult(new Intent(getContext(), AutoAddActivity.class), 0);
             }
         });
 
@@ -81,6 +79,15 @@ public class AutosFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         fillListAutos();
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode== Activity.RESULT_OK){
+            fillListAutos();
+        }
     }
 
     public void fillListAutos() {
@@ -112,7 +119,7 @@ public class AutosFragment extends Fragment {
 
                     return;
                 }
-
+                DataStore.getInstance().setAutoList(response.body().autos);
                 adapter.swapData(response.body().autos);
                 Snackbar.make(getActivity().findViewById(R.id.fabnuevoauto), "Recursos obtenidos", Snackbar.LENGTH_LONG).show();
             }
@@ -154,6 +161,8 @@ public class AutosFragment extends Fragment {
      */
     public interface OnLisAutoListener {
         // TODO: Update argument type and name
-        void OnLisItemAutoListener(Autos.Auto auto);
+        void OnLisItemAutoListener(Auto auto);
+        void OnAddAutoListener(int position);
+        void OnDeleteAutoListener(Auto auto);
     }
 }

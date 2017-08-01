@@ -8,14 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.navi.tecnocarappv3.R;
 import com.example.navi.tecnocarappv3.control.Login;
 import com.example.navi.tecnocarappv3.control.Persona;
 import com.example.navi.tecnocarappv3.control.PersonaInteractorImpl;
-import com.example.navi.tecnocarappv3.control.Personas;
 import com.example.navi.tecnocarappv3.model.ResponseApi;
 import com.example.navi.tecnocarappv3.prefs.SessionPreferences;
 import com.example.navi.tecnocarappv3.view.PresenterViewListener;
@@ -63,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity implements PresenterViewLi
             public void onClick(View v) {
                 if (!validateFields())
                     return;
-                personaInteractor.insert(new Persona(
+                personaInteractor.post(new Persona(
                         0,
                         userName.getText().toString(),
                         userAP.getText().toString(),

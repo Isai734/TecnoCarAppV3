@@ -41,6 +41,13 @@ public class SessionPreferences {
        return mPrefs.getInt(PREF_CLIENTE_CLV, 0);
     }
 
+    public String getUserCliente(){
+        return mPrefs.getString(PREFS_USER,null);
+    }
+    public String getPassCliente(){
+        return mPrefs.getString(PREF_PASS,null);
+    }
+
     public boolean isLoggedIn() {
         return mIsLoggedIn;
     }

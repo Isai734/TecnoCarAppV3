@@ -11,12 +11,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_loog"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.Principal"
+            android:name="com.example.navi.tecnocarappv3.view.Principal"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,9 +26,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activities.LoginActivity"
+            android:name="com.example.navi.tecnocarappv3.view.activities.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".view.activities.SignUpActivity"></activity>
+        <activity android:name="com.example.navi.tecnocarappv3.view.activities.SignUpActivity" />
+        <activity android:name="com.example.navi.tecnocarappv3.view.activities.ListServActivity" />
+        <activity android:name="com.example.navi.tecnocarappv3.view.activities.EditPerfilActivity" />
+        <activity android:name="com.example.navi.tecnocarappv3.view.activities.AutoAddActivity" />
+        <activity android:name="com.example.navi.tecnocarappv3.view.activities.AutoEditActivity" />
+        <activity android:name=".view.activities.AddCitaActivity"></activity>
     </application>
 
 </manifest>

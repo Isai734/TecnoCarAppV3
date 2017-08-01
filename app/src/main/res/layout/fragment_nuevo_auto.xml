@@ -2,23 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.navi.tecnocarappv3.view.fragment.NuevoAuto">
+    tools:context="com.example.navi.tecnocarappv3.es.example.navi.tecnocarappv3.view.fragment.NuevoAuto">
 
     <!-- TODO: Update blank fragment layout -->
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-                android:text="@string/title_NuevoAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView19"
-                android:layout_margin="16dp"
-                android:textSize="24sp"
-                android:textColor="@color/colorPrimaryDark" />
+            android:text="@string/title_NuevoAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView19"
+            android:layout_margin="16dp"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark" />
 
 
         <LinearLayout
@@ -123,18 +125,20 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                    android:id="@+id/button_nuevoAuto"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:text="@string/action_Nuevo_Auto"
-                    android:textStyle="bold"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:textColor="@color/cardview_light_background"
-                    android:layout_gravity="center_vertical|center_horizontal"/>
+                android:id="@+id/button_nuevoAuto"
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/action_Nuevo_Auto"
+                android:textStyle="bold"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@color/cardview_light_background"
+                android:layout_gravity="center_vertical|center_horizontal"/>
         </LinearLayout>
 
     </LinearLayout>
+</ScrollView>
+
 
 </FrameLayout>

@@ -1,9 +1,12 @@
 package com.example.navi.tecnocarappv3.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,32 +17,45 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.navi.tecnocarappv3.control.Auto;
+import com.example.navi.tecnocarappv3.control.AutosInteractorImpl;
+import com.example.navi.tecnocarappv3.control.Cita;
+import com.example.navi.tecnocarappv3.control.CitasInteractorImpl;
+import com.example.navi.tecnocarappv3.control.Orden;
+import com.example.navi.tecnocarappv3.model.ResponseApi;
+import com.example.navi.tecnocarappv3.view.activities.AutoEditActivity;
 import com.example.navi.tecnocarappv3.view.activities.LoginActivity;
 import com.example.navi.tecnocarappv3.R;
-import com.example.navi.tecnocarappv3.control.Autos;
 import com.example.navi.tecnocarappv3.prefs.SessionPreferences;
 import com.example.navi.tecnocarappv3.view.fragment.AcercaDe;
 import com.example.navi.tecnocarappv3.view.fragment.AutosFragment;
-import com.example.navi.tecnocarappv3.view.fragment.Citas;
+import com.example.navi.tecnocarappv3.view.fragment.CitasListFragment;
+import com.example.navi.tecnocarappv3.view.fragment.OrdenListFragment;
 import com.example.navi.tecnocarappv3.view.fragment.Perfil;
 
 public class Principal extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Perfil.OnFragmentInteractionListener,AutosFragment.OnLisAutoListener {
-    public final static String TAG=Principal.class.getSimpleName();
+        implements CitasListFragment.OnListCitasInteractorListener, NavigationView.OnNavigationItemSelectedListener, Perfil.OnFragmentInteractionListener, AutosFragment.OnLisAutoListener, OrdenListFragment.OnItemOrdenListner, PresenterViewListener {
+    public final static String TAG = Principal.class.getSimpleName();
+    Fragment fragment = null;
+    private AutosInteractorImpl interactor;
+    private CitasInteractorImpl interactorCita;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        interactor = new AutosInteractorImpl(this);
+        interactorCita = new CitasInteractorImpl(this);
         setSupportActionBar(toolbar);
-        Log.i(TAG,"Antes de pref");
-        if(!SessionPreferences.get(this).isLoggedIn()){
-            startActivity(new Intent(this,LoginActivity.class));
-            Log.i(TAG,"Dentro de pref");
+
+        Log.i(TAG, "Antes de pref");
+        if (!SessionPreferences.get(this).isLoggedIn()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            Log.i(TAG, "Dentro de pref");
             finish();
         }
-        Log.i(TAG,"Sesion : "+SessionPreferences.get(this).getClaveCliente());
+        Log.i(TAG, "Sesion : " + SessionPreferences.get(this).getClaveCliente());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,6 +65,8 @@ public class Principal extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -86,20 +104,19 @@ public class Principal extends AppCompatActivity
         int id = item.getItemId();
 
         Boolean FragmentTransaction = false;
-        Fragment fragment = null;
-
         if (id == R.id.nav_perfil) {
             // Handle the camera action
             fragment = new Perfil();
             FragmentTransaction = true;
         } else if (id == R.id.nav_citas) {
-            fragment = new Citas();
+            fragment = new CitasListFragment();
             FragmentTransaction = true;
         } else if (id == R.id.nav_autos) {
             fragment = new AutosFragment();
             FragmentTransaction = true;
         } else if (id == R.id.nav_servicios) {
-
+            fragment = new OrdenListFragment();
+            FragmentTransaction = true;
         } else if (id == R.id.nav_acerca) {
             fragment = new AcercaDe();
             FragmentTransaction = true;
@@ -107,16 +124,13 @@ public class Principal extends AppCompatActivity
             SessionPreferences.get(this).logOut();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-
         }
 
-        if(FragmentTransaction){
+        if (FragmentTransaction) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content_principal, fragment).commit();
-
             item.setChecked(true);
             getSupportActionBar().setTitle(item.getTitle());
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -128,7 +142,92 @@ public class Principal extends AppCompatActivity
     }
 
     @Override
-    public void OnLisItemAutoListener(Autos.Auto auto) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
+    @Override
+    public void OnLisItemAutoListener(Auto auto) {
+
+    }
+
+    @Override
+    public void OnAddAutoListener(int auto) {
+        startActivityForResult(new Intent(this, AutoEditActivity.class).putExtra("pos", auto), 1);
+    }
+
+    @Override
+    public void OnDeleteAutoListener(Auto auto) {
+        lanzarAlertaAuto(auto);
+    }
+
+    public void lanzarAlertaAuto(final Auto auto) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Eliminar!");
+        dialog.setMessage("Seguro que desea eliminar el registro de auto?");
+        dialog.setCancelable(true);
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                interactor.delete(auto.getPlaca());
+            }
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
+    }
+
+    public void lanzarAlertaCita(final Cita cita) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Eliminar!");
+        dialog.setMessage("Seguro que desea cancelar la cita?");
+        dialog.setCancelable(true);
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                interactorCita.delete(cita.getId());
+            }
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+        if (show)
+            MyDialogProgress.getInstance(this).show("Eliminando Registro");
+        else
+            MyDialogProgress.getInstance(this).dismiss();
+    }
+
+    @Override
+    public void setOperationError(String response) {
+        Snackbar.make(findViewById(R.id.drawer_layout), response, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setOperationSucess(ResponseApi response) {
+        Snackbar.make(findViewById(R.id.content_principal), response.getMensaje(), Snackbar.LENGTH_LONG).show();
+        ((AutosFragment) fragment).fillListAutos();
+    }
+
+    @Override
+    public void OnItemOrdenListner(Orden item) {
+
+    }
+
+    @Override
+    public void onListCitasListener(Cita item) {
+
+    }
+
+    @Override
+    public void DelteListCitasListener(Cita item) {
+        lanzarAlertaCita(item);
     }
 }

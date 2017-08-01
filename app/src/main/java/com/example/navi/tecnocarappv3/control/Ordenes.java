@@ -1,21 +1,22 @@
 package com.example.navi.tecnocarappv3.control;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Created by Navi on 16/05/2017.
+ * Created by Isai on 15/07/2017.
  */
 
-public class Personas {
-
-    public int estado;
+public class Ordenes {
+    public  int estado;
     public String mensaje;
-    public ArrayList<Persona> persona = new ArrayList<>();
+    public List<Orden> orden=new LinkedList<>();
 
-    public Personas(int estado, String mensaje, ArrayList<Persona> persona) {
+    public Ordenes(int estado, String mensaje, List<Orden> orden) {
+
         this.estado = estado;
         this.mensaje = mensaje;
-        this.persona = persona;
+        this.orden = orden;
     }
 
     public int getEstado() {
@@ -34,11 +35,12 @@ public class Personas {
         this.mensaje = mensaje;
     }
 
-    public ArrayList<Persona> getPersona() {
-        return persona;
+    public List<Orden> getOrden() {
+        return orden;
     }
 
-    public void setPersona(ArrayList<Persona> persona) {
-        this.persona = persona;
+    public void setOrden(List<Orden> orden) {
+        this.orden = orden;
     }
 }
+

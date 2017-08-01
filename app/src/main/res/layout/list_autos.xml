@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:padding="8dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".view.fragment.AutosFragment"
+        tools:context="com.example.navi.tecnocarappv3.view.fragment.AutosFragment"
         tools:listitem="@layout/item_auto"/>
 
 

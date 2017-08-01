@@ -2,16 +2,13 @@ package com.example.navi.tecnocarappv3.control;
 
 import android.util.Log;
 
+import java.io.IOException;
+import java.util.List;
+
 import com.example.navi.tecnocarappv3.model.DataStore;
 import com.example.navi.tecnocarappv3.model.ResponseApi;
 import com.example.navi.tecnocarappv3.model.RetrofitService;
 import com.example.navi.tecnocarappv3.view.PresenterViewListener;
-
-import java.io.IOException;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import okio.Buffer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,24 +19,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Isai on 15/07/2017.
  */
 
-public class PersonaInteractorImpl implements OperInteractor<Persona> {
+public class CitasInteractorImpl implements OperInteractor<Cita> {
 
-    private static final String TAG = PersonaInteractorImpl.class.getSimpleName();
+    private static final String TAG = CitasInteractorImpl.class.getSimpleName();
     private PresenterViewListener listener;
     private Retrofit mRestAdapter;
     private RetrofitService mRetrofitService;
 
-
-    public PersonaInteractorImpl(PresenterViewListener listener) {
+    public CitasInteractorImpl(PresenterViewListener listener) {
         this.listener = listener;
         mRestAdapter = new Retrofit.Builder().baseUrl(RetrofitService.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         mRetrofitService = mRestAdapter.create(RetrofitService.class);
     }
 
     @Override
-    public void post(Persona persona) {
+    public void post(Cita cita) {
         listener.showProgress(true);
-        Call<ResponseApi> insertCall = mRetrofitService.addPersona(persona);
+        Call<ResponseApi> insertCall = mRetrofitService.addCitas(cita);
         insertCall.enqueue(new Callback<ResponseApi>() {
             @Override
             public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
@@ -81,27 +77,12 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
                 listener.setOperationError(t.getMessage());
             }
         });
-    }
-
-    private String bodyToString(final ResponseBody request) {
-        try {
-            final ResponseBody copy = request;
-            final Buffer buffer = new Buffer();
-            byte b[] = new byte[0];
-            if (copy != null) {
-                buffer.readFrom(copy.byteStream());
-            } else
-                return "";
-            return buffer.readUtf8();
-        } catch (final IOException e) {
-            return "did not work";
-        }
     }
 
     @Override
-    public void put(Persona data) {
+    public void put(Cita cita) {
         listener.showProgress(true);
-        Call<ResponseApi> insertCall = mRetrofitService.updatePersona(data.getClave(),data);
+        Call<ResponseApi> insertCall = mRetrofitService.updateCitas(cita.getId(),cita);
         insertCall.enqueue(new Callback<ResponseApi>() {
             @Override
             public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
@@ -143,20 +124,63 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
             }
         });
     }
+
+
 
     @Override
     public void delete(String id) {
+        listener.showProgress(true);
+        Call<ResponseApi> insertCall = mRetrofitService.deleteCitas(id);
+        insertCall.enqueue(new Callback<ResponseApi>() {
+            @Override
+            public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
+                // Mostrar progreso
+                listener.showProgress(false);
+                ResponseApi responseApi;
+                // Procesar errores
+                if (!response.isSuccessful()) {
+                    String error = "Ha ocurrido un error. Contacte al administrador";
+                    if (response.errorBody()
+                            .contentType()
+                            .subtype()
+                            .equals("json")) {
 
+                        responseApi = ResponseApi.fromResponseBody(response.errorBody());
+                        error = responseApi.getMensaje();
+                        // error =error+"\nCodigo: "+ response.code();
+                        Log.d(TAG, error);
+                    } else {
+                        try {
+                            // Reportar causas de error no relacionado con la API
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    listener.setOperationError(error);
+                    return;
+                } else {
+                    responseApi = response.body();
+                    listener.setOperationSucess(responseApi);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseApi> call, Throwable t) {
+                listener.showProgress(false);
+                listener.setOperationError(t.getMessage());
+            }
+        });
     }
 
     @Override
     public void get(int id) {
         listener.showProgress(true);
-        Call<Personas> loginCall = mRetrofitService.getPersona(id);
+        Call<Citas> loginCall = mRetrofitService.getCitas(id);
         Log.d(TAG, "Obteniendo perfil con clave " + id);
-        loginCall.enqueue(new Callback<Personas>() {
+        loginCall.enqueue(new Callback<Citas>() {
             @Override
-            public void onResponse(Call<Personas> call, Response<Personas> response) {
+            public void onResponse(Call<Citas> call, Response<Citas> response) {
                 // Mostrar progreso
                 listener.showProgress(false);
                 // Procesar errores
@@ -178,27 +202,26 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
                     }
                     return;
                 }
-                if (response.body().getPersona().isEmpty()) {
-                    listener.setOperationError("No hay datos");
+                if (response.body().getCita().isEmpty()) {
+                    listener.setOperationError("No hay Ordenes para mostrar");
                     return;
                 }
-                DataStore.getInstance().setPersona(response.body().getPersona().get(0));
-                listener.setOperationSucess(new ResponseApi(0,"Perfil obtenido"));
-
+                Log.i(TAG,"Msg "+response.body().getMensaje());
+                DataStore.getInstance().setCitasList(response.body().getCita());
+                listener.setOperationSucess(new ResponseApi(0, response.body().getMensaje()));
             }
 
             @Override
-            public void onFailure(Call<Personas> call, Throwable t) {
+            public void onFailure(Call<Citas> call, Throwable t) {
                 listener.showProgress(false);
                 listener.setOperationError(t.getMessage());
             }
         });
+
     }
 
     @Override
-    public List<Persona> getAll() {
+    public List<Cita> getAll() {
         return null;
     }
-
-
 }
