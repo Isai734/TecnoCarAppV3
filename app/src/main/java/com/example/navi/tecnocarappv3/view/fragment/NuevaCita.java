@@ -1,5 +1,6 @@
 package com.example.navi.tecnocarappv3.view.fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
@@ -49,7 +50,7 @@ import java.util.List;
  */
 public class NuevaCita extends Fragment implements PresenterViewListener {
 
-    private  String ACTION ="ADD" ;
+    private String ACTION = "ADD";
     private EditText txtFecha;
     private EditText txtDetalle;
     private Button aceptar;
@@ -89,7 +90,7 @@ public class NuevaCita extends Fragment implements PresenterViewListener {
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-saveData();
+                if (validateFields()) saveData();
             }
         });
 
@@ -118,7 +119,7 @@ saveData();
 
                 String input = dayOfMonth + "/" + (month) + "/" + year;
                 SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy");
-                fechaStar=null;
+                fechaStar = null;
                 try {
                     fechaStar = parser.parse(input);
                 } catch (ParseException e) {
@@ -153,16 +154,32 @@ saveData();
         return v;
     }
 
-    public void saveData(){
-        ACTION="ADDs";
+    public boolean validateFields() {
+
+        if (txtFecha.getText().toString().isEmpty()) {
+            txtFecha.setError("Campo vacio");
+            return false;
+        }
+        if (txtHora.getText().toString().isEmpty()) {
+            txtHora.setError("Campo vacio");
+            return false;
+        }
+        if (txtDetalle.getText().toString().isEmpty()) {
+            txtDetalle.setError("Campo vacio");
+            return false;
+        }
+        return true;
+    }
+
+    public void saveData() {
+        ACTION = "ADDs";
         interactorCitas.post(new Cita(
                 /**
                  *  public String id;
                  public String title;
                  public String body;
                  public String url;
-                 @SerializedName("class")
-                 public String clase;
+                 @SerializedName("class") public String clase;
                  public String start;
                  public String end;
                  public String inicio_normal;
@@ -179,24 +196,24 @@ saveData();
                  public String transmision;
                  */
                 null
-                ,DataStore.getInstance().getPersona().getNombre()+" "+DataStore.getInstance().getPersona().getApellido_paterno()+" "+DataStore.getInstance().getPersona().getApellido_materno()
-                ,txtDetalle.getText().toString()
+                , DataStore.getInstance().getPersona().getNombre() + " " + DataStore.getInstance().getPersona().getApellido_paterno() + " " + DataStore.getInstance().getPersona().getApellido_materno()
+                , txtDetalle.getText().toString()
                 , null
-                ,"event-important"
-                ,fechaStar.getTime()+""
-                ,fechaStar.getTime()+""
-                ,txtFecha.getText().toString()+" "+txtHora.getText().toString()
-                ,txtFecha.getText().toString()+" "+txtHora.getText().toString()
-                ,DataStore.getInstance().getAutoList().get(autos.getSelectedItemPosition()).getPlaca()
-                ,null
-                ,SessionPreferences.get(getContext()).getClaveCliente()+""
-                ,"ESPERA"
-                ,null
-                ,null
-                ,null
-                ,null
-                ,null
-                ,null
+                , "event-important"
+                , fechaStar.getTime() + ""
+                , fechaStar.getTime() + ""
+                , txtFecha.getText().toString() + " " + txtHora.getText().toString()
+                , txtFecha.getText().toString() + " " + txtHora.getText().toString()
+                , DataStore.getInstance().getAutoList().get(autos.getSelectedItemPosition()).getPlaca()
+                , null
+                , SessionPreferences.get(getContext()).getClaveCliente() + ""
+                , "ESPERA"
+                , null
+                , null
+                , null
+                , null
+                , null
+                , null
         ));
     }
 
@@ -229,21 +246,19 @@ saveData();
             MyDialogProgress.getInstance(getContext()).show("Realizando Operaciones");
         else
             MyDialogProgress.getInstance(getContext()).dismiss();
-        Log.i(TAG,"Show ptogress : "+show);
+        Log.i(TAG, "Show ptogress : " + show);
     }
 
     @Override
     public void setOperationError(String response) {
         Snackbar.make(getView(), response, Snackbar.LENGTH_LONG).show();
-        Log.i(TAG,"setOperation Error : "+response);
+        Log.i(TAG, "setOperation Error : " + response);
     }
 
     @Override
     public void setOperationSucess(ResponseApi response) {
-        Log.i(TAG,"setOperation Sucess : "+response.getMensaje()+" action : "+ACTION);
-        if(ACTION=="ADD"){
-
-
+        Log.i(TAG, "setOperation Sucess : " + response.getMensaje() + " action : " + ACTION);
+        if (ACTION == "ADD") {
             Snackbar.make(getView(), "Agende su cita", Snackbar.LENGTH_LONG).show();
             if (createDataSpinner().isEmpty()) {
                 Toast.makeText(getContext(), "Datos insuficientes \nAgregue autos primero o Contacte al administrador", Toast.LENGTH_LONG).show();
@@ -252,9 +267,10 @@ saveData();
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, createDataSpinner());
             autos.setAdapter(adapter);
 
-        }else {
-            if(ACTION=="ADDs"){
-                Snackbar.make(getView(), response.getMensaje(), Snackbar.LENGTH_LONG).show();
+        } else {
+            if (ACTION == "ADDs") {
+                Toast.makeText(getContext(), response.getMensaje(), Toast.LENGTH_LONG).show();
+                getActivity().setResult(Activity.RESULT_OK);
                 getActivity().finish();
             }
             Snackbar.make(getView(), response.getMensaje(), Snackbar.LENGTH_LONG).show();

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.navi.tecnocarappv3.R;
 import com.example.navi.tecnocarappv3.control.Auto;
@@ -47,6 +48,8 @@ public class AutosFragment extends Fragment {
     private RetrofitService retrofitService;
     private RecyclerView recyclerView;
     private AutoAdapter adapter;
+    public static int ACTION_ADD_AUTO=679;
+    private LinearLayout empty;
 
     public AutosFragment() {
         // Required empty public constructor
@@ -63,10 +66,11 @@ public class AutosFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getContext(), AutoAddActivity.class), 0);
+                startActivityForResult(new Intent(getContext(), AutoAddActivity.class), ACTION_ADD_AUTO);
             }
         });
 
+        empty = (LinearLayout) v.findViewById(R.id.listempty);
 
         //Crear conexion al servicio REST
         mRestAdapter = new Retrofit.Builder().baseUrl(retrofitService.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
@@ -84,10 +88,13 @@ public class AutosFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode== Activity.RESULT_OK){
-            fillListAutos();
+        if(requestCode==ACTION_ADD_AUTO){
+            if(resultCode== Activity.RESULT_OK){
+                fillListAutos();
+            }
         }
+
+
     }
 
     public void fillListAutos() {
@@ -120,8 +127,7 @@ public class AutosFragment extends Fragment {
                     return;
                 }
                 DataStore.getInstance().setAutoList(response.body().autos);
-                adapter.swapData(response.body().autos);
-                Snackbar.make(getActivity().findViewById(R.id.fabnuevoauto), "Recursos obtenidos", Snackbar.LENGTH_LONG).show();
+                onSucces();
             }
 
             @Override
@@ -129,6 +135,17 @@ public class AutosFragment extends Fragment {
                 Snackbar.make(getActivity().findViewById(R.id.fabnuevoauto), t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void onSucces(){
+
+        Snackbar.make(getActivity().findViewById(R.id.fabnuevoauto), "Recursos obtenidos", Snackbar.LENGTH_LONG).show();
+        if(DataStore.getInstance().getAutoList().isEmpty())
+            empty.setVisibility(View.VISIBLE);
+        else{
+            adapter.swapData(DataStore.getInstance().getAutoList());
+            empty.setVisibility(View.GONE);
+        }
     }
 
 

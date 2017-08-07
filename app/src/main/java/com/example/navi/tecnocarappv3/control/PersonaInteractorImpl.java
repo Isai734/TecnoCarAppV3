@@ -47,14 +47,16 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
                 listener.showProgress(false);
                 ResponseApi responseApi;
                 // Procesar errores
+               // Log.d(TAG, bodyToString(response.errorBody()));
                 if (!response.isSuccessful()) {
                     String error = "Ha ocurrido un error. Contacte al administrador";
                     if (response.errorBody()
                             .contentType()
                             .subtype()
                             .equals("json")) {
-
+                        //Log.d(TAG,"Body "+ bodyToString(response.errorBody()));
                         responseApi = ResponseApi.fromResponseBody(response.errorBody());
+                        assert responseApi != null;
                         error = responseApi.getMensaje();
                         // error =error+"\nCodigo: "+ response.code();
                         Log.d(TAG, error);
@@ -67,7 +69,6 @@ public class PersonaInteractorImpl implements OperInteractor<Persona> {
                         }
                     }
                     listener.setOperationError(error);
-                    return;
                 } else {
                     responseApi = response.body();
                     listener.setOperationSucess(responseApi);

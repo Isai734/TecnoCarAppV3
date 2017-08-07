@@ -1,5 +1,6 @@
 package com.example.navi.tecnocarappv3.view;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,12 +34,15 @@ import com.example.navi.tecnocarappv3.view.fragment.CitasListFragment;
 import com.example.navi.tecnocarappv3.view.fragment.OrdenListFragment;
 import com.example.navi.tecnocarappv3.view.fragment.Perfil;
 
+import static com.example.navi.tecnocarappv3.view.fragment.AutosFragment.ACTION_ADD_AUTO;
+
 public class Principal extends AppCompatActivity
         implements CitasListFragment.OnListCitasInteractorListener, NavigationView.OnNavigationItemSelectedListener, Perfil.OnFragmentInteractionListener, AutosFragment.OnLisAutoListener, OrdenListFragment.OnItemOrdenListner, PresenterViewListener {
     public final static String TAG = Principal.class.getSimpleName();
     Fragment fragment = null;
     private AutosInteractorImpl interactor;
     private CitasInteractorImpl interactorCita;
+    private String RQEUES_ACTION="N";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class Principal extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Log.i(TAG, "Antes de pref");
+
         if (!SessionPreferences.get(this).isLoggedIn()) {
             startActivity(new Intent(this, LoginActivity.class));
             Log.i(TAG, "Dentro de pref");
@@ -65,8 +70,9 @@ public class Principal extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
+        if (navigationView != null) {
+            onNavigationItemSelected(navigationView.getMenu().getItem(3));
+        }
     }
 
     @Override
@@ -144,6 +150,11 @@ public class Principal extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==ACTION_ADD_AUTO){
+            if(resultCode== Activity.RESULT_OK){
+                ((AutosFragment) fragment).fillListAutos();
+            }
+        }
     }
 
     @Override
@@ -153,11 +164,12 @@ public class Principal extends AppCompatActivity
 
     @Override
     public void OnAddAutoListener(int auto) {
-        startActivityForResult(new Intent(this, AutoEditActivity.class).putExtra("pos", auto), 1);
+        startActivityForResult(new Intent(this, AutoEditActivity.class).putExtra("pos", auto), ACTION_ADD_AUTO);
     }
 
     @Override
     public void OnDeleteAutoListener(Auto auto) {
+        RQEUES_ACTION="A";
         lanzarAlertaAuto(auto);
     }
 
@@ -212,8 +224,16 @@ public class Principal extends AppCompatActivity
 
     @Override
     public void setOperationSucess(ResponseApi response) {
-        Snackbar.make(findViewById(R.id.content_principal), response.getMensaje(), Snackbar.LENGTH_LONG).show();
-        ((AutosFragment) fragment).fillListAutos();
+        switch (RQEUES_ACTION){
+            case "A":
+                Snackbar.make(findViewById(R.id.content_principal), response.getMensaje(), Snackbar.LENGTH_LONG).show();
+                ((AutosFragment) fragment).fillListAutos();
+                break;
+            case "C":
+                //Snackbar.make(findViewById(R.id.content_principal), "Cita eliminada", Snackbar.LENGTH_LONG).show();
+                ((CitasListFragment) fragment).interactor.get(SessionPreferences.get(this).getClaveCliente());
+                break;
+        }
     }
 
     @Override
@@ -228,6 +248,7 @@ public class Principal extends AppCompatActivity
 
     @Override
     public void DelteListCitasListener(Cita item) {
+        RQEUES_ACTION="C";
         lanzarAlertaCita(item);
     }
 }

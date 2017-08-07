@@ -80,10 +80,6 @@ public class OrdenInteractorImpl implements OperInteractor<Orden> {
                     }
                     return;
                 }
-                if (response.body().getOrden().isEmpty()) {
-                    listener.setOperationError("No hay Ordenes para mostrar");
-                    return;
-                }
                 Log.i(TAG,"Msg "+response.body().getMensaje());
                 DataStore.getInstance().setOrdenList(response.body().getOrden());
                 listener.setOperationSucess(new ResponseApi(0, response.body().getMensaje()));

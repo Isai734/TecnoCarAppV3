@@ -10,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.navi.tecnocarappv3.R;
 import com.example.navi.tecnocarappv3.control.Orden;
 import com.example.navi.tecnocarappv3.control.OrdenInteractorImpl;
 import com.example.navi.tecnocarappv3.model.DataStore;
@@ -35,6 +37,8 @@ public class OrdenListFragment extends Fragment implements PresenterViewListener
     private OnItemOrdenListner mListener;
     private OrdenInteractorImpl interactor;
     private MyOrdenAdapter adapter;
+    private LinearLayout empty;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -64,18 +68,16 @@ public class OrdenListFragment extends Fragment implements PresenterViewListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(com.example.navi.tecnocarappv3.R.layout.fragment_orden_list, container, false);
-        adapter=new MyOrdenAdapter(null, mListener);
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(adapter);
-        }
+        adapter = new MyOrdenAdapter(null, mListener);
+
+        Context context = view.getContext();
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.listorden);
+        empty = (LinearLayout) view.findViewById(R.id.listempty);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        recyclerView.setAdapter(adapter);
+
         interactor.get(SessionPreferences.get(getContext()).getClaveCliente());
         return view;
     }
@@ -100,7 +102,7 @@ public class OrdenListFragment extends Fragment implements PresenterViewListener
 
     @Override
     public void showProgress(boolean show) {
-        if(show)
+        if (show)
             MyDialogProgress.getInstance(getContext()).show("Obteniendo Ordenes de Servicios");
         else
             MyDialogProgress.getInstance(getContext()).dismiss();
@@ -108,13 +110,19 @@ public class OrdenListFragment extends Fragment implements PresenterViewListener
 
     @Override
     public void setOperationError(String response) {
-        Snackbar.make(getView(),response,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getView(), response, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void setOperationSucess(ResponseApi response) {
-        Snackbar.make(getView(),response.getMensaje(),Snackbar.LENGTH_LONG).show();
-        adapter.swapData(DataStore.getInstance().getOrdenList());
+        Snackbar.make(getView(), response.getMensaje(), Snackbar.LENGTH_LONG).show();
+        if(DataStore.getInstance().getOrdenList().isEmpty())
+            empty.setVisibility(View.VISIBLE);
+        else{
+            adapter.swapData(DataStore.getInstance().getOrdenList());
+            empty.setVisibility(View.GONE);
+        }
+
     }
 
 

@@ -13,6 +13,7 @@ import com.example.navi.tecnocarappv3.control.Autos;
 import com.example.navi.tecnocarappv3.view.fragment.AutosFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,7 +25,7 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoAdapter.ViewHolder> {
 
     private final AutosFragment.OnLisAutoListener mListener;
 
-    ArrayList<Auto> autos;
+    List<Auto> autos;
 
     public AutoAdapter(ArrayList<Auto> autos, AutosFragment.OnLisAutoListener listener) {
         this.autos = autos;
@@ -38,7 +39,7 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    public void swapData(ArrayList<Auto> autos) {
+    public void swapData(List<Auto> autos) {
         this.autos = autos;
         this.notifyDataSetChanged();
     }

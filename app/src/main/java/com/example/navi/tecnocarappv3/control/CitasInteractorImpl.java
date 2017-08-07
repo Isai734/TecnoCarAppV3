@@ -158,7 +158,7 @@ public class CitasInteractorImpl implements OperInteractor<Cita> {
                         }
                     }
                     listener.setOperationError(error);
-                    return;
+
                 } else {
                     responseApi = response.body();
                     listener.setOperationSucess(responseApi);
@@ -202,10 +202,7 @@ public class CitasInteractorImpl implements OperInteractor<Cita> {
                     }
                     return;
                 }
-                if (response.body().getCita().isEmpty()) {
-                    listener.setOperationError("No hay Ordenes para mostrar");
-                    return;
-                }
+
                 Log.i(TAG,"Msg "+response.body().getMensaje());
                 DataStore.getInstance().setCitasList(response.body().getCita());
                 listener.setOperationSucess(new ResponseApi(0, response.body().getMensaje()));
