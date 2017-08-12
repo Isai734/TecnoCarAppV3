@@ -49,17 +49,16 @@ public class Principal extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        interactor = new AutosInteractorImpl(this);
-        interactorCita = new CitasInteractorImpl(this);
         setSupportActionBar(toolbar);
-
         Log.i(TAG, "Antes de pref");
-
         if (!SessionPreferences.get(this).isLoggedIn()) {
             startActivity(new Intent(this, LoginActivity.class));
             Log.i(TAG, "Dentro de pref");
             finish();
+            return;
         }
+        interactor = new AutosInteractorImpl(this);
+        interactorCita = new CitasInteractorImpl(this);
         Log.i(TAG, "Sesion : " + SessionPreferences.get(this).getClaveCliente());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
